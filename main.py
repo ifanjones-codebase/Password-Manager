@@ -44,7 +44,7 @@ try: # safe import for external packages
    from pyperclip import copy
 
 except:
-   install_package("pycryptodome")
+   install_package("pyperclip")
    from pyperclip import copy
 
 try: # safe import for external packages

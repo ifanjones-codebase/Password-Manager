@@ -21,9 +21,9 @@ def install_package(package: str)->None:
 
    print(f"Package Missing,\nInstalling Package: {package}")
 
-   for i in range(0, randint): # animation
+   for i in range(0, randint(3,7)): # animation
       
-      for i in range(0, 3):
+      for ii in range(0, 3):
 
          print('.' * 1, end="", flush=True)
          sleep(0.1)

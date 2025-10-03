@@ -1,12 +1,13 @@
+import sys
 import tkinter as tk
 import json
+import os
 from time import sleep
 from sys import executable
 from pathlib import Path
 from binascii import hexlify, unhexlify
 from random import choice, choices, shuffle, randint
 from subprocess import Popen, check_call
-from os import getcwd
 from string import ascii_lowercase, ascii_uppercase, digits
 from base64 import b64decode, b64encode
 from platform import system
@@ -435,6 +436,9 @@ class App(ctk.CTk):
          rowspan = 7,
          columnspan =4
       )
+      textbox.configure(
+         state="disabled"
+      )
       try:
          textbox.insert("0.0", f"{decrypt(decrypt_key(key))}")
 
@@ -592,13 +596,13 @@ class App(ctk.CTk):
       self.hide_ui()
 
       if system() == "Windows":
-         Popen(f"explorer {getcwd()}")
+         Popen(f"explorer {os.getcwd()}")
 
       elif system() == "Darwin":  # macOS
-         Popen(["open", getcwd()])
+         Popen(["open", os.getcwd()])
 
       else:  # Linux
-         Popen(["xdg-open", getcwd()])
+         Popen(["xdg-open", os.getcwd()])
 
    def help(self)->None:
       self.clear_panel()
@@ -708,7 +712,7 @@ class App(ctk.CTk):
          self,
          text = "Python Password Manager",
          text_color="#ffffff",
-         font=('Arial', 27)
+         font=('Arial', 27, "bold")
       ).grid(
          row = 0,
          column = 7,
@@ -915,7 +919,7 @@ class App(ctk.CTk):
 
       ctk.CTkLabel(
          self,
-         text="if you dont have one make one using the get key button",
+         text="if you dont have one make one using the generate key button",
          text_color="#ffffff",
          font=('Arial', 15),
          fg_color="#2e2e2e"
@@ -1016,6 +1020,39 @@ class App(ctk.CTk):
       self.fill_panel()
       self.hide_ui()
 
+def rename_self_if_needed()->None:
+   """
+   Renames the script from .py to .pyw if needed.
+   """
+
+   current = Path(sys.argv[0]).resolve()
+   target = current.with_name("main.pyw")
+
+   if os.name == "nt":  # Windows
+      # Create a small batch file that waits, then renames
+
+      bat_file = current.with_suffix(".bat")
+      
+      bat_file.write_text(
+   f'''@echo off
+   ping 127.0.0.1 -n 3 > nul
+   rename "{current.name}" "{target.name}"
+   del "%~f0"
+   ''', encoding="utf-8")
+      
+      os.startfile(str(bat_file))
+
+   else:
+
+      # On Unix-like systems, rename directly
+      try:
+            
+            current.rename(target)
+            print(f"Renamed {current} to {target}")
+
+      except Exception as e:
+            print(f"Failed to rename: {e}")
+         
 if __name__ == '__main__':
 
    file_path = Path("data.json")
@@ -1026,6 +1063,11 @@ if __name__ == '__main__':
       with open(file_path, "w") as f:
          json.dump({}, f)
 
-
    app = App()
    app.mainloop()
+
+   current = Path(sys.argv[0]).resolve()
+   if current.name.lower() != "main.pyw":
+      print("converting from a .py to .pyw")
+      sleep(1)
+      rename_self_if_needed()

@@ -8,3 +8,9 @@ Python3
 - customtkinter
 - pyperclip
 - pycryptodome
+
+# compatibility
+works on windows 10
+works on windows 11
+in thoery works on linux need to test
+in theory works on mac os need to test

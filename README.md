@@ -4,7 +4,7 @@ A password manager with a gui using aes encryption to store passwords, made usin
 # requirements:
 Python3
 
-#python external librarys used:
+# python external librarys used:
 - customtkinter
 - pyperclip
 - pycryptodome

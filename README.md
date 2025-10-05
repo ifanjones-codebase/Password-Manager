@@ -3,6 +3,7 @@ A password manager with a gui using aes encryption to store passwords, made usin
 
 # requirements:
 Python3
+Internet ( but only for the 1st time you run it, it might need to install some missing python packages like custom tkinter)
 
 # python external librarys used:
 - customtkinter
@@ -16,5 +17,4 @@ Python3
 - in theory works on mac os need to test
 
 # strange popup warning
-- on 1st install the console will tell you about what its installing, this is it installing missing librarys
-- after closing it for the 1st time it will create a bat file to change its file header from '.py' to '.pyw' this is to stop the console crom staying open while the app is running then it will delete the .bat file
+- on 1st install a popup will tell you about what its installing, this is it installing missing librarys
